@@ -10,6 +10,10 @@
         </div>
         
         <div class="flex gap-2">
+            <button onclick="printReport()" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-semibold text-xs transition shadow-xs flex items-center space-x-2">
+                <i class="fa-solid fa-print"></i>
+                <span>Cetak Laporan (PDF)</span>
+            </button>
             <a href="{{ url('hasil/proses') }}" class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl font-semibold text-xs transition shadow-xs flex items-center space-x-2">
                 <i class="fa-solid fa-bolt"></i>
                 <span>Hitung Ulang K-Means</span>
@@ -303,6 +307,17 @@
                     }
                 });
             });
+        </script>
+        
+        <!-- Hidden print iframe -->
+        <iframe id="print-iframe" class="hidden"></iframe>
+        
+        <!-- Client-side printing script -->
+        <script>
+            function printReport() {
+                const iframe = document.getElementById('print-iframe');
+                iframe.src = "{{ route('hasil.cetak') }}";
+            }
         </script>
     @endif
 </div>

@@ -119,4 +119,32 @@ class HasilController extends Controller
             return redirect()->route('hasil.proses-form')->with('error', $e->getMessage());
         }
     }
+
+    /**
+     * Cetak Laporan Hasil Clustering Akhir (PDF/Print View).
+     */
+    public function cetak()
+    {
+        $hasils = Hasil::with(['santri.nilai.kriteria'])->get();
+
+        if ($hasils->isEmpty()) {
+            return redirect()->route('hasil.index')->with('error', 'Belum ada data hasil clustering untuk dicetak.');
+        }
+
+        // Tambahkan pemrosesan skor rata-rata kombinasi untuk meranking santri
+        $hasils = $hasils->map(function($hasil) {
+            $hafalan = 0;
+            $murojaah = 0;
+            $tahsin = 0;
+            foreach ($hasil->santri->nilai as $nilai) {
+                if ($nilai->kriteria_id == 1) $hafalan = $nilai->nilai;
+                if ($nilai->kriteria_id == 2) $murojaah = $nilai->nilai;
+                if ($nilai->kriteria_id == 3) $tahsin = $nilai->nilai;
+            }
+            $hasil->skor_rata = round(($hafalan + $murojaah + $tahsin) / 3, 2);
+            return $hasil;
+        })->sortByDesc('skor_rata')->values();
+
+        return view('hasil.print', compact('hasils'));
+    }
 }

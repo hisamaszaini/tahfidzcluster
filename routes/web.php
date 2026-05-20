@@ -40,4 +40,5 @@ Route::middleware('auth')->group(function () {
     Route::get('hasil', [HasilController::class, 'index'])->name('hasil.index');
     Route::get('hasil/proses', [HasilController::class, 'prosesForm'])->name('hasil.proses-form');
     Route::post('hasil/proses', [HasilController::class, 'proses'])->name('hasil.proses');
+    Route::get('hasil/cetak', [HasilController::class, 'cetak'])->name('hasil.cetak');
 });
