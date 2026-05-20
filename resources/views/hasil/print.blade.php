@@ -21,15 +21,15 @@
             margin-bottom: 20px;
         }
         .logo-img {
-            width: 75px;
-            height: 75px;
+            width: 90px;
+            height: 90px;
             object-fit: contain;
-            margin-right: 20px;
+            margin-right: 15px;
         }
         .header-text {
             flex-grow: 1;
             text-align: center;
-            margin-right: 95px; /* balances the logo container size to perfectly center the text */
+            margin-right: 10px;
         }
         .header-text h1 {
             font-size: 15pt;
@@ -114,7 +114,7 @@
         <div class="header-text">
             <h1>Pondok Pesantren Tahfidz Al-Qur'an Karangmojo Balong Ponorogo</h1>
             <h2>Laporan Hasil Akhir Analisis Clustering Santri</h2>
-            <p>Alamat: Jln. Agung Dukuh Blender RT. 01/RW. 02, Karangmojo, Balong, Ponorogo, Jawa Timur, 63461</p>
+            <p>Alamat: Jl. Agung Dukuh Blender, RT.01/RW.02, Desa Karangmojo, Kec. Balong, Kab. Ponorogo, Jawa Timur</p>
         </div>
     </div>
     
@@ -163,20 +163,7 @@
             @endforeach
         </tbody>
     </table>
-    
-    <!-- Signature Block -->
-    <div class="signature-container">
-        <div class="signature-box">
-            <p style="margin: 0;">Ponorogo, {{ \Carbon\Carbon::now()->locale('id')->isoFormat('D MMMM Y') }}</p>
-            <p style="margin: 5px 0 0 0;">Mengetahui,</p>
-            <p style="margin: 0 0 5px 0; font-weight: bold;">Kepala Pondok Pesantren</p>
-            <div class="signature-space"></div>
-            <p class="signature-name" style="margin: 0;">Ustadz Abu Bakar, Lc.</p>
-            <p style="margin: 0; font-size: 8pt; color: #555;">NIP. 19800101 201012 1 001</p>
-        </div>
-    </div>
 
-    <!-- Automatic print trigger on load -->
     <script>
         window.onload = function() {
             setTimeout(function() {
