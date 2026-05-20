@@ -268,7 +268,7 @@
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
                                 <thead>
-                                    <tr class="bg-slate-50 border-b border-slate-100 text-slate-500 text-xxs font-semibold uppercase tracking-wider">
+                                    <tr class="bg-slate-50 border-b border-slate-100 text-slate-500 text-xs font-semibold uppercase tracking-wider">
                                         <th class="px-6 py-4">Nama Santri</th>
                                         <th class="px-6 py-4 text-center">C1</th>
                                         <th class="px-6 py-4 text-center">C2</th>
