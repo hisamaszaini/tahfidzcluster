@@ -6,6 +6,7 @@ use App\Models\Santri;
 use App\Models\Nilai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Maatwebsite\Excel\Facades\Excel;
 
 class SantriController extends Controller
 {
@@ -15,33 +16,33 @@ class SantriController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search');
-        
+
         // Tentukan kolom dan arah sorting
         $sortBy = $request->input('sort_by', 'id');
         $sortDir = $request->input('sort_dir', 'desc');
-        
+
         // Validasi agar kolom sort aman dari SQL injection
         $allowedSortColumns = ['id', 'nama', 'tanggal_lahir', 'alamat'];
         if (!in_array($sortBy, $allowedSortColumns)) {
             $sortBy = 'id';
         }
-        
+
         $allowedSortDirs = ['asc', 'desc'];
         if (!in_array($sortDir, $allowedSortDirs)) {
             $sortDir = 'desc';
         }
 
         $query = Santri::with(['nilai']);
-        
+
         if ($search) {
-            $query->where(function($q) use ($search) {
+            $query->where(function ($q) use ($search) {
                 $q->where('nama', 'like', "%{$search}%")
-                  ->orWhere('alamat', 'like', "%{$search}%");
+                    ->orWhere('alamat', 'like', "%{$search}%");
             });
         }
-        
+
         $santris = $query->orderBy($sortBy, $sortDir)->paginate(10)->withQueryString();
-        
+
         return view('santri.index', compact('santris', 'search', 'sortBy', 'sortDir'));
     }
 
@@ -52,9 +53,9 @@ class SantriController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'jenis_kelamin' => 'required|in:L,P',
-            'tanggal_lahir' => 'required|date',
-            'alamat' => 'required|string|max:500',
+            'jenis_kelamin' => 'nullable|in:L,P',
+            'tanggal_lahir' => 'nullable|date',
+            'alamat' => 'nullable|string|max:500',
         ]);
 
         Santri::create([
@@ -74,9 +75,9 @@ class SantriController extends Controller
     {
         $request->validate([
             'nama' => 'required|string|max:255',
-            'jenis_kelamin' => 'required|in:L,P',
-            'tanggal_lahir' => 'required|date',
-            'alamat' => 'required|string|max:500',
+            'jenis_kelamin' => 'nullable|in:L,P',
+            'tanggal_lahir' => 'nullable|date',
+            'alamat' => 'nullable|string|max:500',
         ]);
 
         $santri->update([
@@ -104,7 +105,7 @@ class SantriController extends Controller
     public function destroyBulk(Request $request)
     {
         $ids = $request->input('ids');
-        
+
         if (empty($ids)) {
             return redirect()->route('santri.index')->with('error', 'Tidak ada santri yang dipilih untuk dihapus.');
         }
@@ -115,94 +116,25 @@ class SantriController extends Controller
     }
 
     /**
-     * Proses Impor Data Santri & Nilai via CSV (Upload File ATAU Tempel Teks).
+     * Proses Impor Data Santri & Nilai via Excel.
      */
     public function import(Request $request)
     {
-        $csvContent = '';
+        $request->validate([
+            'excel_file' => 'required|file|mimes:xlsx,xls,csv|max:5120'
+        ]);
 
-        // Opsi 1: Pembacaan dari unggah file
-        if ($request->hasFile('csv_file')) {
-            $request->validate([
-                'csv_file' => 'required|file|mimes:csv,txt|max:2048'
-            ]);
-            $csvContent = file_get_contents($request->file('csv_file')->getRealPath());
-        } 
-        // Opsi 2: Pembacaan dari tempel teks textarea
-        elseif ($request->filled('csv_text')) {
-            $csvContent = $request->csv_text;
-        } 
-        // Jika dua-duanya kosong
-        else {
-            return redirect()->route('santri.index')->with('error', 'Silakan pilih file CSV atau tempel teks CSV terlebih dahulu.');
-        }
+        try {
+            $import = new \App\Imports\SantriImport();
+            Excel::import($import, $request->file('excel_file'));
 
-        // Parse content menjadi baris
-        $lines = explode("\n", str_replace("\r", "", $csvContent));
-        $importedCount = 0;
-
-        DB::transaction(function () use ($lines, &$importedCount) {
-            foreach ($lines as $index => $line) {
-                if (trim($line) === '') continue;
-
-                $data = str_getcsv($line, ',');
-
-                // Lewatkan baris pertama jika itu baris header kolom
-                if ($index === 0 && (strtolower($data[0]) === 'nama' || strtolower($data[0]) === 'name')) {
-                    continue;
-                }
-
-                // Harus memiliki minimal 7 kolom (nama, jk, tgl_lahir, alamat, hafalan, murojaah, tahsin)
-                if (count($data) < 7) continue;
-
-                $nama = trim($data[0]);
-                $jk = strtoupper(trim($data[1]));
-                $tglLahir = trim($data[2]);
-                $alamat = trim($data[3]);
-                $hafalan = (int)trim($data[4]);
-                $murojaah = (int)trim($data[5]);
-                $tahsin = (int)trim($data[6]);
-
-                // Validasi data dasar
-                if (empty($nama) || !in_array($jk, ['L', 'P']) || empty($tglLahir)) {
-                    continue;
-                }
-
-                // Buat Santri
-                $santri = Santri::create([
-                    'nama' => $nama,
-                    'jenis_kelamin' => $jk,
-                    'tanggal_lahir' => $tglLahir,
-                    'alamat' => $alamat ?: 'Tidak ada alamat',
-                ]);
-
-                // Buat Skor C1, C2, C3
-                Nilai::create([
-                    'santri_id' => $santri->id,
-                    'kriteria_id' => 1,
-                    'nilai' => min(100, max(0, $hafalan))
-                ]);
-
-                Nilai::create([
-                    'santri_id' => $santri->id,
-                    'kriteria_id' => 2,
-                    'nilai' => min(100, max(0, $murojaah))
-                ]);
-
-                Nilai::create([
-                    'santri_id' => $santri->id,
-                    'kriteria_id' => 3,
-                    'nilai' => min(100, max(0, $tahsin))
-                ]);
-
-                $importedCount++;
+            if ($import->importedCount > 0) {
+                return redirect()->route('santri.index')->with('success', "Sukses mengimpor {$import->importedCount} data santri beserta nilai kriteria!");
+            } else {
+                return redirect()->route('santri.index')->with('error', 'Tidak ada data valid yang diimpor. Pastikan format kolom Excel Anda sudah benar.');
             }
-        });
-
-        if ($importedCount > 0) {
-            return redirect()->route('santri.index')->with('success', "Sukses mengimpor {$importedCount} data santri beserta nilai kriteria!");
-        } else {
-            return redirect()->route('santri.index')->with('error', 'Gagal mengimpor data. Pastikan format kolom CSV Anda sudah benar.');
+        } catch (\Exception $e) {
+            return redirect()->route('santri.index')->with('error', 'Terjadi kesalahan saat mengimpor data: ' . $e->getMessage());
         }
     }
 }

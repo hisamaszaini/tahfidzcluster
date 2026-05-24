@@ -17,13 +17,21 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             KriteriaSeeder::class,
-            SantriSeeder::class,
+            // SantriSeeder::class,
         ]);
 
         User::factory()->create([
             'name' => 'Administrator',
             'email' => 'admin@admin.com',
             'password' => bcrypt('password'),
+            'role' => 'admin',
+        ]);
+
+        User::factory()->create([
+            'name' => 'Musyrif',
+            'email' => 'mustrif@gmail.com',
+            'password' => bcrypt('password'),
+            'role' => 'musyrif',
         ]);
     }
 }

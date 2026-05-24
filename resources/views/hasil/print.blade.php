@@ -154,10 +154,10 @@
                     <td class="text-center" style="color: #334155;">{{ $tahsin }}</td>
                     <td class="text-center" style="color: #0f172a;">{{ $hasil->skor_rata }}</td>
                     <td class="text-center">
-                        <span style="color: {{
-                            $hasil->kluster === 'Sangat Baik' ? '#047857' : 
-                            ($hasil->kluster === 'Baik' ? '#4338ca' : '#b45309')
-                        }};">{{ $hasil->kluster }}</span>
+                        @php
+                            $color = $hasil->kluster === 'Sangat Baik' ? '#047857' : ($hasil->kluster === 'Baik' ? '#4338ca' : '#b45309');
+                        @endphp
+                        <span {!! 'style="color: ' . $color . ';"' !!}>{{ $hasil->kluster }}</span>
                     </td>
                 </tr>
             @endforeach

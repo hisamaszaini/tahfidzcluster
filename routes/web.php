@@ -5,6 +5,8 @@ use App\Http\Controllers\HasilController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\KriteriaController;
 use App\Http\Controllers\NilaiController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 
@@ -41,4 +43,13 @@ Route::middleware('auth')->group(function () {
     Route::get('hasil/proses', [HasilController::class, 'prosesForm'])->name('hasil.proses-form');
     Route::post('hasil/proses', [HasilController::class, 'proses'])->name('hasil.proses');
     Route::get('hasil/cetak', [HasilController::class, 'cetak'])->name('hasil.cetak');
+
+    // Pengaturan Profil Mandiri (Semua User)
+    Route::get('profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::put('profile/password', [ProfileController::class, 'updatePassword'])->name('profile.password');
+
+    // Manajemen Akun CRUD (Khusus Admin)
+    Route::resource('user', UserController::class)->except(['show', 'create', 'edit']);
 });
+

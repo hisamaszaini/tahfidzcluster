@@ -92,6 +92,22 @@
                 <span class="text-sm w-5 text-center"><i class="fa-solid fa-chart-line"></i></span>
                 <span>Hasil Clustering</span>
             </a>
+
+            @if(Auth::user()->role === 'admin')
+            <!-- Manajemen Akun -->
+            <a href="{{ route('user.index') }}"
+                class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition {{ Request::is('user*') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800' }}">
+                <span class="text-sm w-5 text-center"><i class="fa-solid fa-users-gear"></i></span>
+                <span>Manajemen Akun</span>
+            </a>
+            @endif
+
+            <!-- Pengaturan Akun -->
+            <a href="{{ route('profile.edit') }}"
+                class="flex items-center space-x-3 px-3.5 py-2.5 rounded-xl text-xs font-semibold transition {{ Request::is('profile*') ? 'bg-emerald-50 text-emerald-700' : 'text-slate-500 hover:bg-slate-50 hover:text-slate-800' }}">
+                <span class="text-sm w-5 text-center"><i class="fa-solid fa-user-gear"></i></span>
+                <span>Pengaturan Akun</span>
+            </a>
         </nav>
 
         <!-- Bottom Sidebar Profile Info & Logout -->

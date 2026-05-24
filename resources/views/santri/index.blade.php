@@ -44,7 +44,7 @@
             <!-- Import Button -->
             <button @click="openImportModal = true" class="px-4 py-2 border border-slate-200 hover:bg-slate-50 rounded-xl font-semibold text-xs text-slate-600 transition flex items-center space-x-2">
                 <span><i class="fa-solid fa-file-import"></i></span>
-                <span>Impor CSV</span>
+                <span>Impor Excel</span>
             </button>
             
             <!-- Create Button -->
@@ -213,7 +213,7 @@
     <!-- MODAL: ADD SANTRI -->
     <div x-show="openAddModal" class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-transition>
         <div class="flex items-center justify-center min-h-screen p-4 text-center">
-            <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm" @click="openAddModal = false"></div>
+            <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs" @click="openAddModal = false"></div>
             
             <div class="relative z-10 w-full max-w-lg bg-white rounded-2xl shadow-xl overflow-hidden text-left transition-all transform">
                 <div class="bg-emerald-600 px-6 py-4 text-white flex justify-between items-center">
@@ -233,20 +233,20 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xxs font-semibold text-slate-500 uppercase tracking-wider mb-1">Jenis Kelamin</label>
-                            <select name="jenis_kelamin" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-medium outline-none bg-white focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500">
+                            <select name="jenis_kelamin" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-medium outline-none bg-white focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500">
                                 <option value="L">Laki-laki (L)</option>
                                 <option value="P">Perempuan (P)</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-xxs font-semibold text-slate-500 uppercase tracking-wider mb-1">Tanggal Lahir</label>
-                            <input type="date" name="tanggal_lahir" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500">
+                            <input type="date" name="tanggal_lahir" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500">
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-xxs font-semibold text-slate-500 uppercase tracking-wider mb-1">Alamat Rumah</label>
-                        <textarea name="alamat" required rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500"></textarea>
+                        <textarea name="alamat" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500"></textarea>
                     </div>
 
                     <div class="flex justify-end space-x-2 pt-2 border-t border-slate-100">
@@ -282,20 +282,20 @@
                     <div class="grid grid-cols-2 gap-4">
                         <div>
                             <label class="block text-xxs font-semibold text-slate-500 uppercase tracking-wider mb-1">Jenis Kelamin</label>
-                            <select name="jenis_kelamin" x-model="editSantri.jenis_kelamin" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-medium outline-none bg-white focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500">
+                            <select name="jenis_kelamin" x-model="editSantri.jenis_kelamin" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-medium outline-none bg-white focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500">
                                 <option value="L">Laki-laki (L)</option>
                                 <option value="P">Perempuan (P)</option>
                             </select>
                         </div>
                         <div>
                             <label class="block text-xxs font-semibold text-slate-500 uppercase tracking-wider mb-1">Tanggal Lahir</label>
-                            <input type="date" name="tanggal_lahir" x-model="editSantri.tanggal_lahir" required class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500">
+                            <input type="date" name="tanggal_lahir" x-model="editSantri.tanggal_lahir" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500">
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-xxs font-semibold text-slate-500 uppercase tracking-wider mb-1">Alamat Rumah</label>
-                        <textarea name="alamat" x-model="editSantri.alamat" required rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500"></textarea>
+                        <textarea name="alamat" x-model="editSantri.alamat" rows="2" class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-medium outline-none focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500"></textarea>
                     </div>
 
                     <div class="flex justify-end space-x-2 pt-2 border-t border-slate-100">
@@ -310,9 +310,9 @@
     <!-- MODAL: IMPORT CSV -->
     <div x-show="openImportModal" class="fixed inset-0 z-50 overflow-y-auto" style="display: none;" x-transition>
         <div class="flex items-center justify-center min-h-screen p-4 text-center">
-            <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm" @click="openImportModal = false"></div>
+            <div class="fixed inset-0 bg-slate-900/40 backdrop-blur-xs" @click="openImportModal = false"></div>
             
-            <div class="relative z-10 w-full max-w-lg bg-white rounded-2xl shadow-xl overflow-hidden text-left transition-all transform" x-data="{ importTab: 'file' }">
+            <div class="relative z-10 w-full max-w-lg bg-white rounded-2xl shadow-xl overflow-hidden text-left transition-all transform">
                 <div class="bg-emerald-600 px-6 py-4 text-white flex justify-between items-center">
                     <h3 class="text-xs font-semibold">Impor Data Santri Massal</h3>
                     <button @click="openImportModal = false" class="text-white hover:text-emerald-100 transition" title="Tutup">
@@ -320,39 +320,20 @@
                     </button>
                 </div>
 
-                <!-- Tab selectors -->
-                <div class="flex border-b border-slate-100 text-xxs font-semibold">
-                    <button @click="importTab = 'file'" :class="importTab === 'file' ? 'border-emerald-500 text-emerald-600 border-b-2 font-semibold' : 'text-slate-400 hover:text-slate-600'" class="w-1/2 py-3 text-center flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-file-arrow-up"></i> Unggah File CSV
-                    </button>
-                    <button @click="importTab = 'text'" :class="importTab === 'text' ? 'border-emerald-500 text-emerald-600 border-b-2 font-semibold' : 'text-slate-400 hover:text-slate-600'" class="w-1/2 py-3 text-center flex items-center justify-center gap-1.5">
-                        <i class="fa-solid fa-keyboard"></i> Tempel Teks CSV
-                    </button>
-                </div>
-
                 <form action="{{ url('santri/import') }}" method="POST" enctype="multipart/form-data" class="p-6 space-y-4">
                     @csrf
                     
-                    <!-- File upload tab -->
-                    <div x-show="importTab === 'file'" class="space-y-2">
-                        <label class="block text-xxs font-semibold text-slate-500 uppercase tracking-wider">Pilih File CSV (.csv / .txt)</label>
-                        <input type="file" name="csv_file" class="w-full text-xs text-slate-600 border border-slate-200 rounded-xl p-2 bg-slate-50 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xxs file:font-semibold file:bg-emerald-50 file:text-emerald-700 file:cursor-pointer">
-                    </div>
-
-                    <!-- Textarea paste tab -->
-                    <div x-show="importTab === 'text'" style="display: none;" class="space-y-2">
-                        <label class="block text-xxs font-semibold text-slate-500 uppercase tracking-wider">Tempel Konten CSV Mentah</label>
-                        <textarea name="csv_text" rows="5" placeholder="nama,jenis_kelamin,tanggal_lahir,alamat,nilai_hafalan,nilai_murojaah,nilai_tahsin&#10;Muhammad Ali,L,2009-08-12,Jakarta,80,75,90&#10;Fatimah Azzahra,P,2010-02-14,Solo,95,90,92" 
-                                  class="w-full px-3 py-2 border border-slate-200 rounded-xl text-xs font-mono outline-none focus:ring-2 focus:ring-emerald-500/10 focus:border-emerald-500"></textarea>
+                    <div class="space-y-2">
+                        <label class="block text-xxs font-semibold text-slate-500 uppercase tracking-wider">Pilih File Excel (.xlsx / .xls)</label>
+                        <input type="file" name="excel_file" accept=".xlsx, .xls, .csv" class="w-full text-xs text-slate-600 border border-slate-200 rounded-xl p-2 bg-slate-50 file:mr-4 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xxs file:font-semibold file:bg-emerald-50 file:text-emerald-700 file:cursor-pointer">
                     </div>
 
                     <!-- Guidelines -->
                     <div class="bg-slate-50 p-3.5 rounded-xl space-y-2">
-                        <span class="block text-xxs font-bold text-slate-600 uppercase tracking-wide flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-emerald-600"></i> Ketentuan Format Kolom CSV:</span>
+                        <span class="block text-xxs font-bold text-slate-600 uppercase tracking-wide flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-emerald-600"></i> Ketentuan Format Kolom Excel:</span>
                         <ul class="text-xxs text-slate-400 font-medium list-disc list-inside space-y-1">
-                            <li>Format kolom harus urut: <code class="text-emerald-700 font-semibold bg-emerald-50 px-1 rounded">nama,jenis_kelamin,tanggal_lahir,alamat,nilai_hafalan,nilai_murojaah,nilai_tahsin</code></li>
-                            <li>Kolom <code class="text-slate-700">jenis_kelamin</code> bernilai <code class="text-slate-700">L</code> atau <code class="text-slate-700">P</code>.</li>
-                            <li>Kolom <code class="text-slate-700">tanggal_lahir</code> berformat <code class="text-slate-700">YYYY-MM-DD</code> (misal: <code class="text-slate-700">2010-05-15</code>).</li>
+                            <li>Format kolom harus urut: <code class="text-emerald-700 font-semibold bg-emerald-50 px-1 rounded">No, Nama, Hafalan, Murojaah, Tahsin</code> (Baris pertama untuk header).</li>
+                            <li>Kolom <code class="text-slate-700">Jenis Kelamin, Tanggal Lahir, Alamat</code> akan dikosongkan secara otomatis dan bisa diedit nanti.</li>
                             <li>Nilai kriteria berkisar antara <code class="text-slate-700">0</code> sampai <code class="text-slate-700">100</code>.</li>
                         </ul>
                     </div>

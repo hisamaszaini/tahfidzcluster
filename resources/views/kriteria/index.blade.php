@@ -22,7 +22,7 @@
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <thead>
-                    <tr class="bg-slate-50 border-b border-slate-100 text-slate-500 text-xxs font-semibold uppercase tracking-wider">
+                    <tr class="bg-slate-50 border-b border-slate-100 text-slate-500 text-xs font-semibold uppercase tracking-wider">
                         <th class="px-6 py-4 text-center w-24">Kode</th>
                         <th class="px-6 py-4">Nama Dimensi Kriteria</th>
                         <th class="px-6 py-4">Deskripsi Karakteristik Pengukuran</th>
@@ -30,29 +30,29 @@
                 </thead>
                 <tbody class="divide-y divide-slate-100 text-xs text-slate-600 font-medium">
                     @foreach($kriterias as $kriteria)
-                        <tr class="hover:bg-slate-50/40 transition-colors">
-                            <!-- Kode -->
-                            <td class="px-6 py-5 text-center">
-                                <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-lg font-semibold tracking-wider">
-                                    {{ $kriteria->kode }}
-                                </span>
-                            </td>
+                    <tr class="hover:bg-slate-50/40 transition-colors">
+                        <!-- Kode -->
+                        <td class="px-6 py-5 text-center">
+                            <span class="px-2.5 py-1 bg-emerald-50 text-emerald-700 rounded-lg font-semibold tracking-wider">
+                                {{ $kriteria->kode }}
+                            </span>
+                        </td>
 
-                            <!-- Nama -->
-                            <td class="px-6 py-5 font-semibold text-slate-800 text-sm">
-                                {{ $kriteria->nama }}
-                            </td>
+                        <!-- Nama -->
+                        <td class="px-6 py-5 font-semibold text-slate-800 text-sm">
+                            {{ $kriteria->nama }}
+                        </td>
 
-                            <td class="px-6 py-5 text-slate-400 font-normal leading-relaxed">
-                                @if($kriteria->kode == 'C1')
-                                    Tingkat kelancaran dan jumlah hafalan juz/lembaran baru yang disetorkan santri kepada Musyrif pembina setiap pekan.
-                                @elseif($kriteria->kode == 'C2')
-                                    Tingkat konsistensi dan kekuatan pengulangan hafalan lama (<em>murojaah</em>) santri untuk menjaga kemutkinan hafalan.
-                                @else
-                                    Ketepatan pelafalan huruf (<em>makhorijul huruf</em>), panjang-pendek (<em>mad</em>), dengung (<em>ghunnah</em>), serta keindahan tajwid.
-                                @endif
-                            </td>
-                        </tr>
+                        <td class="px-6 py-5 text-slate-400 font-normal leading-relaxed">
+                            @if($kriteria->kode == 'C1')
+                            Tingkat kelancaran dan jumlah hafalan juz/lembaran baru yang disetorkan santri kepada Musyrif pembina setiap pekan.
+                            @elseif($kriteria->kode == 'C2')
+                            Tingkat konsistensi dan kekuatan pengulangan hafalan lama (<em>murojaah</em>) santri untuk menjaga kemutkinan hafalan.
+                            @else
+                            Ketepatan pelafalan huruf (<em>makhorijul huruf</em>), panjang-pendek (<em>mad</em>), dengung (<em>ghunnah</em>), serta keindahan tajwid.
+                            @endif
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>
